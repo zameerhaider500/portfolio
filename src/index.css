@@ -1,0 +1,122 @@
+@import "./colors.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  /* ☁️ White base + faint sky washes in the corners */
+  body {
+    @apply text-slate-600 antialiased;
+    background-color: #ffffff;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--c-primary) / 0.10), transparent 70%),
+      radial-gradient(ellipse 60% 45% at 95% 8%, rgb(var(--c-accent) / 0.07), transparent 70%),
+      radial-gradient(ellipse 55% 40% at 0% 30%, rgb(var(--c-primary-light) / 0.08), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: rgb(var(--c-primary) / 0.25);
+    color: #0f172a;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply max-w-6xl mx-auto px-5 sm:px-6;
+  }
+  .section {
+    @apply py-20 sm:py-28;
+  }
+
+  /* 🌫️ Very light tinted band for alternating sections */
+  .section-glow {
+    border-top: 1px solid rgb(var(--c-primary) / 0.12);
+    border-bottom: 1px solid rgb(var(--c-primary) / 0.12);
+    background-image:
+      linear-gradient(to bottom, rgb(var(--c-primary) / 0.05), rgb(var(--c-accent) / 0.03)),
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgb(var(--c-primary) / 0.04), transparent 75%);
+  }
+
+  .gradient-text {
+    background-image: linear-gradient(
+      to right,
+      rgb(var(--c-primary-strong)),
+      rgb(var(--c-primary)),
+      rgb(var(--c-accent-strong))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-white font-semibold px-7 py-3.5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer;
+    background-image: linear-gradient(
+      to right,
+      rgb(var(--c-primary-strong)),
+      rgb(var(--c-accent-strong))
+    );
+  }
+  .btn-primary:hover {
+    box-shadow: 0 8px 26px rgb(var(--c-primary) / 0.35);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white text-slate-700 font-semibold px-7 py-3.5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer;
+  }
+  .btn-outline:hover {
+    border-color: rgb(var(--c-primary));
+    color: rgb(var(--c-primary-strong));
+  }
+
+  /* 🃏 White card with soft shadow */
+  .card {
+    @apply bg-white border border-slate-200 rounded-2xl shadow-[0_1px_3px_rgba(15,23,42,0.05)];
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .card:hover {
+    border-color: rgb(var(--c-primary) / 0.35);
+    box-shadow: 0 12px 36px rgb(var(--c-primary) / 0.1);
+  }
+
+  .chip {
+    @apply text-xs font-medium bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200;
+  }
+
+  .field {
+    @apply w-full rounded-xl bg-white border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition;
+  }
+  .field:focus {
+    border-color: rgb(var(--c-primary));
+    box-shadow: 0 0 0 3px rgb(var(--c-primary) / 0.15);
+  }
+}
+
+/* Theme-tinted grid lines for the hero */
+.bg-grid {
+  background-image: linear-gradient(to right, rgb(var(--c-primary) / 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--c-primary) / 0.08) 1px, transparent 1px);
+  background-size: 54px 54px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 45%, transparent 100%);
+}

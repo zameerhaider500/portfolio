@@ -1,0 +1,51 @@
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  🎨  COLOR SCHEME FILE — THE ONLY FILE YOU EDIT FOR COLORS  ║
+   ╚══════════════════════════════════════════════════════════════╝
+   Light theme needs MEDIUM colors (500–600 range) so text/buttons
+   stay readable on white. Format: "R G B" (spaces, no commas).   */
+
+:root {
+  /* ── ✅ ACTIVE THEME: Sky & Cyan ── */
+  --c-primary: 14 165 233;
+  --c-primary-light: 56 189 248;
+  --c-primary-strong: 2 132 199;
+  --c-accent: 6 182 212;
+  --c-accent-light: 34 211 238;
+  --c-accent-strong: 8 145 178;
+
+  /* ── Preset: Blue & Indigo ──
+  --c-primary: 59 130 246;
+  --c-primary-light: 96 165 250;
+  --c-primary-strong: 37 99 235;
+  --c-accent: 99 102 241;
+  --c-accent-light: 129 140 248;
+  --c-accent-strong: 79 70 229;
+  */
+
+  /* ── Preset: Emerald & Teal ──
+  --c-primary: 16 185 129;
+  --c-primary-light: 52 211 153;
+  --c-primary-strong: 5 150 105;
+  --c-accent: 20 184 166;
+  --c-accent-light: 45 212 191;
+  --c-accent-strong: 13 148 136;
+  */
+
+  /* ── Preset: Violet & Fuchsia ──
+  --c-primary: 139 92 246;
+  --c-primary-light: 167 139 250;
+  --c-primary-strong: 124 58 237;
+  --c-accent: 217 70 239;
+  --c-accent-light: 232 121 249;
+  --c-accent-strong: 192 38 211;
+  */
+
+  /* ── Preset: Rose & Pink ──
+  --c-primary: 244 63 94;
+  --c-primary-light: 251 113 133;
+  --c-primary-strong: 225 29 72;
+  --c-accent: 236 72 153;
+  --c-accent-light: 244 114 182;
+  --c-accent-strong: 219 39 119;
+  */
+}
