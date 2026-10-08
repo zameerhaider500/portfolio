@@ -7,6 +7,7 @@ const initial = { name: "", email: "", pkg: "", message: "" };
 export default function ContactForm() {
   const [form, setForm] = useState(initial);
   const [status, setStatus] = useState("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const set = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -29,6 +30,7 @@ export default function ContactForm() {
   const sendEmail = async (e) => {
     e.preventDefault();
     setStatus("sending");
+    setErrorMsg("");
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -48,9 +50,11 @@ export default function ContactForm() {
         setStatus("sent");
         setForm(initial);
       } else {
+        setErrorMsg(data.message || `Request failed (code ${res.status})`);
         setStatus("error");
       }
-    } catch {
+    } catch (err) {
+      setErrorMsg(err.message || "Network error");
       setStatus("error");
     }
   };
@@ -66,9 +70,16 @@ export default function ContactForm() {
         </div>
       )}
       {status === "error" && (
-        <div className="flex items-center gap-3 rounded-xl border border-red-500/30 bg-red-50 px-4 py-3 text-red-500 text-sm">
-          <AlertCircle className="w-5 h-5 shrink-0" />
-          Something went wrong. Please reach me on WhatsApp instead.
+        <div className="rounded-xl border border-red-500/30 bg-red-50 px-4 py-3 text-red-500 text-sm">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 shrink-0" />
+            Something went wrong. Please reach me on WhatsApp instead.
+          </div>
+          {errorMsg && (
+            <p className="mt-2 text-xs text-red-400 break-words">
+              <strong>Debug:</strong> {errorMsg}
+            </p>
+          )}
         </div>
       )}
 
