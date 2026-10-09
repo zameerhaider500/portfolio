@@ -1,71 +1,210 @@
+import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Button from "../ui/Button";
 import Reveal from "../ui/Reveal";
 
 const stats = [
-  { value: "10+", label: "Projects Delivered" },
+  { value: "30+", label: "Projects Delivered" },
   { value: "5★", label: "Client Rating" },
   { value: "3–14 days", label: "Typical Delivery" },
   { value: "100%", label: "Mobile Responsive" },
 ];
 
+const photo = (id) =>
+  `https://images.unsplash.com/${id}?auto=format&fm=webp&fit=crop&w=800&q=75`;
+
+const logo = (brand, color) =>
+  `https://cdn.simpleicons.org/${brand}/${color}`;
+
+const images = [
+  {
+    src: photo("photo-1523381210434-271e8be1f52b"),
+    alt: "Online store products",
+    label: "Shopify stores",
+    logos: [logo("shopify", "7AB55C")],
+  },
+  {
+    src: photo("photo-1499951360447-b19be8fe80f5"),
+    alt: "Designing a business website",
+    label: "WordPress sites",
+    logos: [logo("wordpress", "21759B")],
+  },
+  {
+    src: photo("photo-1461749280684-dccba630e2f6"),
+    alt: "Custom web development",
+    label: "React web apps",
+    logos: [logo("react", "0EA5C9")],
+  },
+  {
+    src: photo("photo-1551288049-bebda4e38f71"),
+    alt: "Ad performance dashboard",
+    label: "Meta & TikTok ads",
+    logos: [logo("meta", "0081FB"), logo("tiktok", "000000")],
+  },
+];
+
+const platforms = [
+  { name: "Shopify", src: logo("shopify", "7AB55C") },
+  { name: "WordPress", src: logo("wordpress", "21759B") },
+  { name: "React", src: logo("react", "0EA5C9") },
+  { name: "Meta", src: logo("meta", "0081FB") },
+  { name: "TikTok", src: logo("tiktok", "000000") },
+];
+
+function hideBroken(e) {
+  e.currentTarget.style.display = "none";
+}
+
+function HeroCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % images.length);
+    }, 1750);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-slate-200 shadow-xl shadow-slate-900/10 sm:h-[460px] lg:h-[min(65vh,680px)]">
+      {images.map((img, i) => (
+        <div
+          key={img.label}
+          aria-hidden={i !== activeIndex}
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            i === activeIndex ? "z-10 opacity-100" : "z-0 opacity-0"
+          }`}
+        >
+          <img
+            src={img.src}
+            alt={img.alt}
+            loading={i === 0 ? "eager" : "lazy"}
+            onError={hideBroken}
+            className="h-full w-full object-cover"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+
+          <div className="absolute inset-x-4 bottom-4 flex items-center gap-3 rounded-2xl bg-white/90 p-3 pr-4 backdrop-blur sm:inset-x-6 sm:bottom-6 sm:p-4">
+            <span className="flex shrink-0 -space-x-1.5">
+              {img.logos.map((l) => (
+                <span
+                  key={l}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-white ring-1 ring-slate-200 sm:h-11 sm:w-11"
+                >
+                  <img
+                    src={l}
+                    alt=""
+                    className="h-5 w-5"
+                    loading="lazy"
+                  />
+                </span>
+              ))}
+            </span>
+
+            <span className="text-base font-semibold text-slate-900 sm:text-lg">
+              {img.label}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden pt-36 sm:pt-44 pb-20">
-      {/* Soft light color blobs on white */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-grid" />
-        <div className="absolute -top-32 left-[8%] w-[480px] h-[480px] rounded-full bg-primary/20 blur-[140px] animate-blob" />
-        <div className="absolute top-24 right-[4%] w-[420px] h-[420px] rounded-full bg-accent/15 blur-[130px] animate-blob-slow" />
-        <div className="absolute bottom-[-30%] left-[30%] w-[380px] h-[380px] rounded-full bg-primary-light/20 blur-[120px] animate-blob" style={{ animationDelay: "-7s" }} />
-      </div>
+    <section
+      id="home"
+      className="relative overflow-hidden bg-white pt-20 sm:pt-24 lg:pt-28"
+    >
+      <div className="relative mx-auto max-w-6xl px-5">
+        <div className="grid items-center gap-16 lg:grid-cols-12">
+          {/* Copy */}
+          <div className="order-2 lg:order-1 lg:col-span-6">
+            <Reveal delay={100}>
+              <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-black sm:text-5xl lg:text-[3.6rem]">
+                Websites that sell.
+                <span className="block text-black">
+                  Ads that bring buyers.
+                </span>
+              </h1>
+            </Reveal>
+            <Reveal delay={200}>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
+                Forge Vision - builds modern websites and powerful eCommerce experiences that help businesses stand out in the digital world.
+                <br />
+                We combine creative design with smart technology to turn your ideas into meaningful digital solutions.
+              </p>
+            </Reveal>
+            <Reveal delay={300}>
+              <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                <Button href="/#contact">
+                  Start Your Project <ArrowRight className="h-4 w-4" />
+                </Button>
 
-      <div className="relative max-w-4xl mx-auto px-5 text-center">
-        <Reveal>
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-4 py-1.5 text-sm text-emerald-600 font-medium">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            Available for new projects
-          </span>
-        </Reveal>
+                <Button href="/#projects" variant="outline">
+                  View My Work
+                </Button>
+              </div>
+            </Reveal>
 
-        <Reveal delay={100}>
-          <h1 className="mt-8 font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 leading-[1.08] tracking-tight">
-            Shopify stores that turn <span className="gradient-text">visitors into customers</span>
-          </h1>
-        </Reveal>
+            <Reveal delay={400}>
+              <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3">
+                <span className="text-sm text-slate-500">I work with</span>
 
-        <Reveal delay={200}>
-          <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            I'm Zameer Haider — I design & build fast, professional eCommerce websites that help
-            businesses look credible and sell more.
-          </p>
-        </Reveal>
-
-        <Reveal delay={300}>
-          <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Button href="/#contact">
-              Start Your Project <ArrowRight className="w-4 h-4" />
-            </Button>
-            <Button href="/#projects" variant="outline">
-              View My Work
-            </Button>
+                <div className="flex items-center gap-2.5">
+                  {platforms.map((p) => (
+                    <span
+                      key={p.name}
+                      title={p.name}
+                      className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm"
+                    >
+                      <img
+                        src={p.src}
+                        alt={p.name}
+                        className="h-5 w-5"
+                        loading="lazy"
+                      />
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
 
+          {/* Large fading image carousel */}
+          <div className="order-1 min-w-0 lg:order-2 lg:col-span-6">
+            <Reveal delay={250}>
+              <HeroCarousel />
+            </Reveal>
+          </div>
+        </div>
+
+        {/* Facts strip */}
         <Reveal delay={400}>
-          <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-3xl mx-auto">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <div className="font-display text-2xl sm:text-3xl font-bold text-slate-900">{s.value}</div>
-                <div className="mt-1 text-xs sm:text-sm text-slate-500">{s.label}</div>
+          <dl className="mt-20 grid grid-cols-2 border-t border-slate-200 lg:grid-cols-4">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`py-6 pr-6 ${
+                  i % 2 === 1 ? "border-l border-slate-200 pl-6" : ""
+                } ${
+                  i > 0 ? "lg:border-l lg:border-slate-200 lg:pl-6" : ""
+                }`}
+              >
+                <dt className="text-sm text-slate-500">{s.label}</dt>
+
+                <dd className="mt-1 font-display text-2xl font-semibold text-black sm:text-3xl">
+                  {s.value}
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </Reveal>
       </div>
     </section>
   );
 }
+

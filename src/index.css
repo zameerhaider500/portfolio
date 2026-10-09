@@ -8,23 +8,28 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
-  /* ☁️ White base + faint sky washes in the corners */
   body {
-    @apply text-slate-600 antialiased;
-    background-color: #ffffff;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--c-primary) / 0.10), transparent 70%),
-      radial-gradient(ellipse 60% 45% at 95% 8%, rgb(var(--c-accent) / 0.07), transparent 70%),
-      radial-gradient(ellipse 55% 40% at 0% 30%, rgb(var(--c-primary-light) / 0.08), transparent 70%);
-    background-attachment: fixed;
+  @apply min-h-screen text-slate-600 antialiased;
+  background-color: #ffffff;
+  background-image: none;
+}
+
+  /* Keyboard focus ring for accessibility */
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-primary));
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 
   ::selection {
     background-color: rgb(var(--c-primary) / 0.25);
     color: #0f172a;
   }
+
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -34,21 +39,39 @@
   ::-webkit-scrollbar-thumb {
     background: #cbd5e1;
     border-radius: 8px;
+    border: 2px solid #f1f5f9;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+  }
+
+  /* Respect users who prefer less motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
   .container-x {
-    @apply max-w-6xl mx-auto px-5 sm:px-6;
-  }
-  .section {
-    @apply py-20 sm:py-28;
+    @apply mx-auto max-w-6xl px-5 sm:px-6;
   }
 
-  /* 🌫️ Very light tinted band for alternating sections */
+  .section {
+    @apply py-20 sm:py-28;
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Light tinted band for alternating sections */
   .section-glow {
     border-top: 1px solid rgb(var(--c-primary) / 0.12);
     border-bottom: 1px solid rgb(var(--c-primary) / 0.12);
@@ -58,6 +81,7 @@
   }
 
   .gradient-text {
+    color: rgb(var(--c-primary-strong));
     background-image: linear-gradient(
       to right,
       rgb(var(--c-primary-strong)),
@@ -66,11 +90,12 @@
     );
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: transparent;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl text-white font-semibold px-7 py-3.5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-7 py-3.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0;
     background-image: linear-gradient(
       to right,
       rgb(var(--c-primary-strong)),
@@ -82,29 +107,40 @@
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white text-slate-700 font-semibold px-7 py-3.5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer;
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-7 py-3.5 font-semibold text-slate-700 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0;
   }
   .btn-outline:hover {
     border-color: rgb(var(--c-primary));
     color: rgb(var(--c-primary-strong));
   }
 
-  /* 🃏 White card with soft shadow */
+  /* White card with soft shadow and hover lift */
   .card {
-    @apply bg-white border border-slate-200 rounded-2xl shadow-[0_1px_3px_rgba(15,23,42,0.05)];
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    @apply rounded-2xl border border-slate-200 bg-white shadow-[0_1px_3px_rgba(15,23,42,0.05)];
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
   }
   .card:hover {
     border-color: rgb(var(--c-primary) / 0.35);
     box-shadow: 0 12px 36px rgb(var(--c-primary) / 0.1);
+    transform: translateY(-2px);
   }
 
   .chip {
-    @apply text-xs font-medium bg-slate-100 text-slate-600 px-3 py-1 rounded-full border border-slate-200;
+    @apply rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 transition-colors duration-300;
+  }
+  .chip:hover {
+    border-color: rgb(var(--c-primary) / 0.35);
+    color: rgb(var(--c-primary-strong));
   }
 
   .field {
-    @apply w-full rounded-xl bg-white border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none transition;
+    @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition;
+  }
+  .field::placeholder {
+    @apply text-slate-400;
   }
   .field:focus {
     border-color: rgb(var(--c-primary));
@@ -114,9 +150,11 @@
 
 /* Theme-tinted grid lines for the hero */
 .bg-grid {
-  background-image: linear-gradient(to right, rgb(var(--c-primary) / 0.08) 1px, transparent 1px),
+  background-image:
+    linear-gradient(to right, rgb(var(--c-primary) / 0.08) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(var(--c-primary) / 0.08) 1px, transparent 1px);
   background-size: 54px 54px;
   -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 45%, transparent 100%);
   mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 45%, transparent 100%);
+  pointer-events: none;
 }

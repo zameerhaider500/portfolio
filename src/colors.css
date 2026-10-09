@@ -5,13 +5,22 @@
    stay readable on white. Format: "R G B" (spaces, no commas).   */
 
 :root {
-  /* ── ✅ ACTIVE THEME: Sky & Cyan ── */
+  /* ── ✅ ACTIVE THEME: Teal & Indigo ── */
+  --c-primary: 13 148 136;
+  --c-primary-light: 45 212 191;
+  --c-primary-strong: 15 118 110;
+  --c-accent: 79 70 229;
+  --c-accent-light: 129 140 248;
+  --c-accent-strong: 67 56 202;
+
+  /* ── Preset: Sky & Cyan ──
   --c-primary: 14 165 233;
   --c-primary-light: 56 189 248;
   --c-primary-strong: 2 132 199;
   --c-accent: 6 182 212;
   --c-accent-light: 34 211 238;
   --c-accent-strong: 8 145 178;
+  */
 
   /* ── Preset: Blue & Indigo ──
   --c-primary: 59 130 246;

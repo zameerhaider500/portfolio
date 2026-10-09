@@ -5,7 +5,6 @@ import Projects from "../components/home/Projects";
 import Services from "../components/home/Services";
 import Pricing from "../components/home/Pricing";
 import Process from "../components/home/Process";
-import WordPressCTA from "../components/home/WordPressCTA";
 import FAQ from "../components/home/FAQ";
 import ContactForm from "../components/ContactForm";
 import SectionHeading from "../components/ui/SectionHeading";
@@ -16,11 +15,10 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <WhyMe />
-      <Projects />
       <Services />
+      <Projects />
+      <WhyMe />
       <Pricing />
-      <WordPressCTA />
       <Process />
       <FAQ />
 
