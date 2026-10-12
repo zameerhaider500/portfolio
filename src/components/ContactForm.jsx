@@ -259,14 +259,6 @@ export default function ContactForm() {
 
       {/* Submission buttons */}
       <div className="flex flex-col sm:flex-row gap-3 pt-1">
-        <button
-          type="button"
-          onClick={sendWhatsApp}
-          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#1fb857] text-white font-semibold px-6 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(37,211,102,0.35)] cursor-pointer"
-        >
-          <MessageCircle className="w-4 h-4" />
-          Send via WhatsApp
-        </button>
 
         <button
           type="submit"
